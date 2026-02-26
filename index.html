@@ -3,45 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sprint Luxe | 58 ولاية</title>
+    <title>Sprint Luxe | 4500 DA</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { --neon-green: #39FF14; --neon-pink: #FF1493; --dark: #121212; }
-        
         body { font-family: 'Cairo', sans-serif; background: #000; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        
         .container { width: 95%; max-width: 400px; background: white; height: 90vh; max-height: 720px; border-radius: 40px; display: flex; flex-direction: column; padding: 25px; text-align: center; box-sizing: border-box; position: relative; }
-
         .price-display { font-size: 1.6rem; font-weight: 900; color: var(--dark); margin: 5px 0; opacity: 0; transition: 0.5s; }
         .show-price { opacity: 1 !important; }
-
         .scene { flex: 1; position: relative; overflow: hidden; background: #f7f7f7; border-radius: 30px; margin: 15px 0; display: flex; align-items: center; justify-content: center; }
-
         .road-sign { position: absolute; top: 15%; left: 50%; transform: translateX(-50%) scale(0.8); background: var(--dark); color: white; padding: 12px 20px; border-radius: 12px; font-weight: 900; opacity: 0; transition: 0.5s; z-index: 1; border: 2px solid var(--neon-green); white-space: nowrap; }
         .is-moving .road-sign { opacity: 1; transform: translateX(-50%) scale(1.1); }
-
         svg#shoe-svg { width: 220px; transition: 0.6s ease; z-index: 5; }
         .shoe-body { fill: none; stroke: #222; stroke-width: 2.5; transition: 0.8s; }
         .is-green .shoe-body { fill: var(--neon-green); }
         .is-pink .shoe-body { fill: var(--neon-pink); }
-
-        .box-wrap { position: absolute; top: -200px; opacity: 0; transition: 0.7s; z-index: 10; }
+        .box-wrap { position: absolute; top: -200px; opacity: 0; transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; }
         .is-packaged .box-wrap { top: 35%; opacity: 1; }
         .is-packaged #shoe-svg { opacity: 0; transform: scale(0.1); }
         .is-shipped .box-wrap { opacity: 0; transform: scale(0.5); top: 60%; }
-
         .truck-wrap { position: absolute; left: -400px; bottom: 30px; transition: 1s ease-in-out; z-index: 20; }
         .is-shipped .truck-wrap { left: 50%; transform: translateX(-50%); }
         .is-moving .truck-wrap { left: 800px !important; transition: 1.5s ease-in !important; }
-
-        .order-form { display: none; flex-direction: column; gap: 10px; }
+        .order-form { display: none; flex-direction: column; gap: 8px; }
         .is-filling-info .order-form { display: flex; }
-        .is-filling-info .scene { display: none; } /* إخفاء المشهد مؤقتاً لتوفير مساحة للولايات */
-
-        input, select { padding: 14px; border: 2px solid #eee; border-radius: 15px; font-family: 'Cairo'; outline: none; font-size: 1rem; }
+        .is-filling-info .scene { flex: 0.15; }
+        input, select { padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: 'Cairo'; outline: none; font-size: 0.9rem; }
         .btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 20px; font-size: 1.1rem; font-weight: 900; cursor: pointer; width: 100%; transition: 0.3s; }
         .btn:disabled { opacity: 0.3; }
-        
         .color-btns { display: flex; gap: 10px; margin-bottom: 10px; }
         .c-btn { flex: 1; padding: 12px; border-radius: 12px; border: none; font-weight: 900; cursor: pointer; }
     </style>
@@ -63,7 +52,7 @@
         <div class="box-wrap">
             <svg width="100" viewBox="0 0 100 70">
                 <rect x="5" y="15" width="90" height="50" fill="#111" rx="5" />
-                <rect x="5" y="35" width="90" height="12" id="box-stripe" />
+                <rect x="5" y="35" width="90" height="12" fill="var(--neon-green)" id="box-stripe" />
             </svg>
         </div>
         <div class="truck-wrap" id="truck">
@@ -78,13 +67,9 @@
 
     <div class="order-form">
         <input type="text" id="custName" placeholder="الاسم الكامل">
-        <select id="custState">
-            <option value="">اختر الولاية (58 ولاية)</option>
-        </select>
-        <div style="display: flex; gap: 10px;">
-            <select id="custSize" style="flex: 2;"><option value="">المقاس</option><option>40</option><option>41</option><option>42</option><option>43</option></select>
-            <input type="number" id="custQty" value="1" min="1" style="flex: 1;" placeholder="الكمية">
-        </div>
+        <input type="tel" id="custPhone" placeholder="رقم الهاتف">
+        <select id="custState"><option value="">اختر الولاية</option></select>
+        <select id="custSize"><option value="">المقاس</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option></select>
     </div>
 
     <div class="controls">
@@ -97,24 +82,41 @@
 </div>
 
 <script>
-    // مصفوفة الـ 58 ولاية
-    const states = ["01-أدرار","02-الشلف","03-الأغواط","04-أم البواقي","05-باتنة","06-بجاية","07-بسكرة","08-بشار","09-البليدة","10-البويرة","11-تمنراست","12-تبسة","13-تلمسان","14-تيارت","15-تيزي وزو","16-الجزائر","17-الجلفة","18-جيجل","19-سطيف","20-سعيدة","21-سكيكدة","22-سيدي بلعباس","23-عنابة","24-قالمة","25-قسنطينة","26-المدية","27-مستغانم","28-المسيلة","29-معسكر","30-ورقلة","31-وهران","32-البيض","33-إليزي","34-برج بوعريريج","35-بومرداس","36-الطارف","37-تندوف","38-تسمسيلت","39-الوادي","40-خنشلة","41-سوق أهراس","42-تيبازة","43-ميلة","44-عين الدفلى","45-النعامة","46-عين تموشنت","47-غرداية","48-غليزان","49-تيميمون","50-برج باجي مختار","51-أولاد جلال","52-بني عباس","53-عين صالح","54-عين قزام","55-تقرت","56-جانت","57-المغير","58-المنيعة"];
-    const stateSelect = document.getElementById('custState');
-    states.forEach(state => {
-        let opt = document.createElement('option');
-        opt.value = state;
-        opt.innerText = state;
-        stateSelect.appendChild(opt);
-    });
-
     let step = 0;
+    let selectedColor = "";
+    const states = ["01 أدرار","02 الشلف","03 الأغواط","04 أم البواقي","05 باتنة","06 بجاية","07 بسكرة","08 بشار","09 البليدة","10 البويرة","11 تمنراست","12 تبسة","13 تلمسان","14 تيارت","15 تيزي وزو","16 الجزائر","17 الجلفة","18 جيجل","19 سطيف","20 سعيدة","21 سكيكدة","22 سيدي بلعباس","23 عنابة","24 قالمة","25 قسنطينة","26 المدية","27 مستغانم","28 المسيلة","29 معسكر","30 ورقلة","31 وهران","32 البيض","33 إليزي","34 برج بوعريريج","35 بومرداس","36 الطارف","37 تندوف","38 تسمسيلت","39 الوادي","40 خنشلة","41 سوق أهراس","42 تيبازة","43 ميلة","44 عين الدفلى","45 النعامة","46 عين تموشنت","47 غرداية","48 غليزان","49 تيميمون","50 برج باجي مختار","51 أولاد جلال","52 بني عباس","53 عين صالح","54 عين قزام","55 تقرت","56 جانت","57 المغير","58 المنيعة"];
+    
+    // تعبئة الولايات
+    const stateSelect = document.getElementById('custState');
+    states.forEach(s => { let opt = document.createElement('option'); opt.value = s; opt.innerText = s; stateSelect.appendChild(opt); });
+
     function chooseColor(color) {
+        selectedColor = color;
         const app = document.getElementById('app');
         app.classList.remove('is-green', 'is-pink');
         app.classList.add('is-' + color);
         document.getElementById('box-stripe').setAttribute('fill', color === 'green' ? '#39FF14' : '#FF1493');
+        document.getElementById('roadSign').style.borderColor = color === 'green' ? '#39FF14' : '#FF1493';
         document.getElementById('actionBtn').disabled = false;
         document.getElementById('actionBtn').innerText = "تأكيد اللون";
+    }
+
+    async function sendToSheet() {
+        // --- ضع هنا رابط الـ Web App URL الخاص بجوجل سكريبت ---
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQYdBqBQITwQNtdAMTRNG8WfeKhL13V0ah1Nh6TeNLH7wPGQhPFRGymjPuQ8dsYYMSug/exec";
+        
+        const data = {
+            name: document.getElementById('custName').value,
+            phone: document.getElementById('custPhone').value,
+            state: document.getElementById('custState').value,
+            size: document.getElementById('custSize').value,
+            color: selectedColor,
+            date: new Date().toLocaleString()
+        };
+
+        try {
+            await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', cache: 'no-cache', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
+        } catch (e) { console.log(e); }
     }
 
     function nextStep() {
@@ -122,6 +124,18 @@
         const btn = document.getElementById('actionBtn');
         const price = document.getElementById('price');
         const title = document.getElementById('title');
+
+        if (step === 2) { // التحقق من البيانات ومنع السبام
+            const lastOrder = localStorage.getItem('lastOrder');
+            if (lastOrder && Date.now() - lastOrder < 120000) { // دقيقتين
+                alert("لقد قمت بإرسال طلب مؤخراً، انتظر قليلاً"); return;
+            }
+            if (!document.getElementById('custName').value || !document.getElementById('custPhone').value || !document.getElementById('custState').value) {
+                alert("يرجى ملء كافة الخانات"); return;
+            }
+            localStorage.setItem('lastOrder', Date.now());
+            sendToSheet(); // إرسال البيانات
+        }
 
         step++;
         if (step === 1) {
@@ -135,9 +149,6 @@
             btn.innerText = "تأكيد وتغليف";
         } 
         else if (step === 3) {
-            if(!document.getElementById('custName').value || !stateSelect.value) { 
-                alert("يرجى إكمال الاسم والولاية"); step--; return; 
-            }
             app.classList.remove('is-filling-info');
             price.classList.remove('show-price');
             app.classList.add('is-packaged');
@@ -147,10 +158,10 @@
         else if (step === 4) {
             app.classList.add('is-shipped');
             title.innerText = "تحميل الشحنة";
-            btn.innerText = "انطلق الآن";
+            btn.innerText = "انطلاق الآن";
         } 
         else if (step === 5) {
-            app.classList.add('is-moving'); 
+            app.classList.add('is-moving');
             title.innerText = "تم الشحن بنجاح!";
             btn.innerText = "اطلب من جديد";
             btn.onclick = () => location.reload();
