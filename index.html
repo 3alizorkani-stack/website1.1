@@ -1,173 +1,193 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
+<html lang="ar" dir="rtl"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sprint Luxe | 2500 DA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --neon-green: #39FF14; --neon-pink: #FF1493; --dark: #121212; }
-        body { font-family: 'Cairo', sans-serif; background: #000; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        .container { width: 95%; max-width: 400px; background: white; height: 90vh; max-height: 720px; border-radius: 40px; display: flex; flex-direction: column; padding: 25px; text-align: center; box-sizing: border-box; position: relative; }
-        .price-display { font-size: 1.6rem; font-weight: 900; color: var(--dark); margin: 5px 0; opacity: 0; transition: 0.5s; }
-        .show-price { opacity: 1 !important; }
-        .scene { flex: 1; position: relative; overflow: hidden; background: #f7f7f7; border-radius: 30px; margin: 15px 0; display: flex; align-items: center; justify-content: center; }
-        .road-sign { position: absolute; top: 15%; left: 50%; transform: translateX(-50%) scale(0.8); background: var(--dark); color: white; padding: 12px 20px; border-radius: 12px; font-weight: 900; opacity: 0; transition: 0.5s; z-index: 1; border: 2px solid var(--neon-green); white-space: nowrap; }
-        .is-moving .road-sign { opacity: 1; transform: translateX(-50%) scale(1.1); }
-        svg#shoe-svg { width: 220px; transition: 0.6s ease; z-index: 5; }
-        .shoe-body { fill: none; stroke: #222; stroke-width: 2.5; transition: 0.8s; }
-        .is-green .shoe-body { fill: var(--neon-green); }
-        .is-pink .shoe-body { fill: var(--neon-pink); }
-        .box-wrap { position: absolute; top: -200px; opacity: 0; transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; }
-        .is-packaged .box-wrap { top: 35%; opacity: 1; }
-        .is-packaged #shoe-svg { opacity: 0; transform: scale(0.1); }
-        .is-shipped .box-wrap { opacity: 0; transform: scale(0.5); top: 60%; }
-        .truck-wrap { position: absolute; left: -400px; bottom: 30px; transition: 1s ease-in-out; z-index: 20; }
-        .is-shipped .truck-wrap { left: 50%; transform: translateX(-50%); }
-        .is-moving .truck-wrap { left: 800px !important; transition: 1.5s ease-in !important; }
-        .order-form { display: none; flex-direction: column; gap: 8px; }
-        .is-filling-info .order-form { display: flex; }
-        .is-filling-info .scene { flex: 0.15; }
-        input, select { padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: 'Cairo'; outline: none; font-size: 0.9rem; }
-        .btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 20px; font-size: 1.1rem; font-weight: 900; cursor: pointer; width: 100%; transition: 0.3s; }
-        .btn:disabled { opacity: 0.3; }
-        .color-btns { display: flex; gap: 10px; margin-bottom: 10px; }
-        .c-btn { flex: 1; padding: 12px; border-radius: 12px; border: none; font-weight: 900; cursor: pointer; }
-    </style>
-</head>
-<body>
-
-<div class="container" id="app">
-    <div id="info">
-        <h2 id="title">Sprint Luxe</h2>
-        <div class="price-display" id="price">2500 DA</div>
-    </div>
-
-    <div class="scene">
-        <div class="road-sign" id="roadSign">طلبك في طريقه إليك!</div>
-        <svg id="shoe-svg" viewBox="0 0 100 60">
-            <path class="shoe-body" d="M10,45 C15,45 25,48 40,48 C60,48 85,42 90,35 C95,25 80,15 60,18 C45,20 35,35 10,40 Z" />
-            <path d="M12,46 Q50,52 88,44" fill="none" stroke="#222" stroke-width="2" />
-        </svg>
-        <div class="box-wrap">
-            <svg width="100" viewBox="0 0 100 70">
-                <rect x="5" y="15" width="90" height="50" fill="#111" rx="5" />
-                <rect x="5" y="35" width="90" height="12" fill="var(--neon-green)" id="box-stripe" />
-            </svg>
-        </div>
-        <div class="truck-wrap" id="truck">
-            <svg width="160" viewBox="0 0 120 60">
-                <rect x="5" y="10" width="85" height="40" fill="#111" />
-                <rect x="92" y="20" width="22" height="30" fill="#222" />
-                <circle cx="25" cy="50" r="7" fill="#333" />
-                <circle cx="70" cy="50" r="7" fill="#333" />
-            </svg>
-        </div>
-    </div>
-
-    <div class="order-form">
-        <input type="text" id="custName" placeholder="الاسم الكامل">
-        <input type="tel" id="custPhone" placeholder="رقم الهاتف">
-        <select id="custState"><option value="">اختر الولاية</option></select>
-        <select id="custSize"><option value="">المقاس</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option></select>
-    </div>
-
-    <div class="controls">
-        <div class="color-btns" id="colorSelectors">
-            <button class="c-btn" style="background: var(--neon-green);" onclick="chooseColor('green')">أخضر</button>
-            <button class="c-btn" style="background: var(--neon-pink); color: white;" onclick="chooseColor('pink')">وردي</button>
-        </div>
-        <button class="btn" id="actionBtn" onclick="nextStep()" disabled>اختر اللون</button>
-    </div>
-</div>
-
-<script>
-    let step = 0;
-    let selectedColor = "";
-    const states = ["01 أدرار","02 الشلف","03 الأغواط","04 أم البواقي","05 باتنة","06 بجاية","07 بسكرة","08 بشار","09 البليدة","10 البويرة","11 تمنراست","12 تبسة","13 تلمسان","14 تيارت","15 تيزي وزو","16 الجزائر","17 الجلفة","18 جيجل","19 سطيف","20 سعيدة","21 سكيكدة","22 سيدي بلعباس","23 عنابة","24 قالمة","25 قسنطينة","26 المدية","27 مستغانم","28 المسيلة","29 معسكر","30 ورقلة","31 وهران","32 البيض","33 إليزي","34 برج بوعريريج","35 بومرداس","36 الطارف","37 تندوف","38 تسمسيلت","39 الوادي","40 خنشلة","41 سوق أهراس","42 تيبازة","43 ميلة","44 عين الدفلى","45 النعامة","46 عين تموشنت","47 غرداية","48 غليزان","49 تيميمون","50 برج باجي مختار","51 أولاد جلال","52 بني عباس","53 عين صالح","54 عين قزام","55 تقرت","56 جانت","57 المغير","58 المنيعة"];
+    <title>PHANTOM X | DZ STORE</title>
     
-    // تعبئة الولايات
-    const stateSelect = document.getElementById('custState');
-    states.forEach(s => { let opt = document.createElement('option'); opt.value = s; opt.innerText = s; stateSelect.appendChild(opt); });
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800&amp;family=Tajawal:wght@400;700;900&amp;display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    function chooseColor(color) {
-        selectedColor = color;
-        const app = document.getElementById('app');
-        app.classList.remove('is-green', 'is-pink');
-        app.classList.add('is-' + color);
-        document.getElementById('box-stripe').setAttribute('fill', color === 'green' ? '#39FF14' : '#FF1493');
-        document.getElementById('roadSign').style.borderColor = color === 'green' ? '#39FF14' : '#FF1493';
-        document.getElementById('actionBtn').disabled = false;
-        document.getElementById('actionBtn').innerText = "تأكيد اللون";
-    }
+    <style>
+        :root {
+            --primary: #ff3e3e;
+            --dark-bg: #050505;
+            --glow: #1a0505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
 
-    async function sendToSheet() {
-        // --- ضع هنا رابط الـ Web App URL الخاص بجوجل سكريبت ---
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQYdBqBQITwQNtdAMTRNG8WfeKhL13V0ah1Nh6TeNLH7wPGQhPFRGymjPuQ8dsYYMSug/exec";
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
         
-        const data = {
-            name: document.getElementById('custName').value,
-            phone: document.getElementById('custPhone').value,
-            state: document.getElementById('custState').value,
-            size: document.getElementById('custSize').value,
-            color: selectedColor,
-            date: new Date().toLocaleString()
-        };
-
-        try {
-            await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', cache: 'no-cache', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
-        } catch (e) { console.log(e); }
-    }
-
-    function nextStep() {
-        const app = document.getElementById('app');
-        const btn = document.getElementById('actionBtn');
-        const price = document.getElementById('price');
-        const title = document.getElementById('title');
-
-        if (step === 2) { // التحقق من البيانات ومنع السبام
-            const lastOrder = localStorage.getItem('lastOrder');
-            if (lastOrder && Date.now() - lastOrder < 120000) { // دقيقتين
-                alert("لقد قمت بإرسال طلب مؤخراً، انتظر قليلاً"); return;
-            }
-            if (!document.getElementById('custName').value || !document.getElementById('custPhone').value || !document.getElementById('custState').value) {
-                alert("يرجى ملء كافة الخانات"); return;
-            }
-            localStorage.setItem('lastOrder', Date.now());
-            sendToSheet(); // إرسال البيانات
+        body {
+            background: radial-gradient(circle at 80% 20%, var(--glow) 0%, var(--dark-bg) 80%);
+            background-attachment: fixed;
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        step++;
-        if (step === 1) {
-            document.getElementById('colorSelectors').style.display = 'none';
-            btn.innerText = "أين نرسله؟";
-        } 
-        else if (step === 2) {
-            price.classList.add('show-price');
-            app.classList.add('is-filling-info');
-            title.innerText = "بيانات الشحن";
-            btn.innerText = "تأكيد وتغليف";
-        } 
-        else if (step === 3) {
-            app.classList.remove('is-filling-info');
-            price.classList.remove('show-price');
-            app.classList.add('is-packaged');
-            title.innerText = "تغليف المنتج";
-            btn.innerText = "استدعاء الشاحنة";
-        } 
-        else if (step === 4) {
-            app.classList.add('is-shipped');
-            title.innerText = "تحميل الشحنة";
-            btn.innerText = "انطلاق الآن";
-        } 
-        else if (step === 5) {
-            app.classList.add('is-moving');
-            title.innerText = "تم الشحن بنجاح!";
-            btn.innerText = "اطلب من جديد";
-            btn.onclick = () => location.reload();
+        /* --- Header --- */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 12px 5%; backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
         }
-    }
-</script>
-</body>
-</html>
 
+        .logo { font-family: 'Outfit'; font-size: 1.2rem; font-weight: 900; }
+        .logo span { color: var(--primary); }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; padding: 100px 5% 40px;
+        }
+
+        .hero-content { flex: 1; z-index: 2; text-align: center; }
+        .hero-content h1 { font-size: clamp(2rem, 8vw, 4.5rem); line-height: 1.1; margin-bottom: 15px; font-weight: 900; }
+        .hero-content p { color: #aaa; font-size: 1rem; margin-bottom: 25px; }
+
+        .hero-image { flex: 1; display: flex; justify-content: center; margin-top: 20px; }
+        .hero-image img {
+            width: 100%; max-width: 450px; transform: rotate(-15deg);
+            filter: drop-shadow(0 15px 40px rgba(255,62,62,0.3));
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float { 0%, 100% { transform: rotate(-15deg) translateY(0); } 50% { transform: rotate(-10deg) translateY(-15px); } }
+
+        /* --- Order Section --- */
+        .order-section { padding: 50px 5% 100px; }
+        .order-container {
+            max-width: 1000px; margin: 0 auto; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 30px;
+            backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.02);
+            padding: 30px; border-radius: 25px; border: 1px solid var(--border);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #888; font-size: 0.85rem; }
+        .form-group input, .form-group select {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #333;
+            padding: 14px; border-radius: 12px; color: white; font-family: inherit; font-size: 1rem;
+        }
+
+        .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        .size-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px 5px;
+            text-align: center; border-radius: 10px; cursor: pointer; font-size: 0.9rem;
+        }
+        .size-btn.active { background: var(--primary); border-color: var(--primary); font-weight: bold; }
+
+        .submit-btn {
+            width: 100%; background: var(--primary); color: white; border: none;
+            padding: 18px; border-radius: 12px; font-weight: 900; font-size: 1.2rem;
+            cursor: pointer; box-shadow: 0 10px 25px rgba(255,62,62,0.4); margin-top: 15px;
+            transition: 0.3s;
+        }
+        .submit-btn:disabled { background: #555; cursor: not-allowed; box-shadow: none; }
+
+        .mobile-sticky-btn {
+            display: none; position: fixed; bottom: 15px; left: 5%; right: 5%;
+            background: var(--primary); color: white; padding: 16px;
+            border-radius: 50px; text-align: center; text-decoration: none;
+            font-weight: 900; z-index: 999; box-shadow: 0 10px 30px rgba(255,62,62,0.5);
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 900px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 80px; }
+            .hero-image { order: -1; margin-bottom: 30px; }
+            .hero-image img { width: 85%; }
+            .order-container { grid-template-columns: 1fr; padding: 20px; }
+            .mobile-sticky-btn { display: block; }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+    </style>
+<style id="master-style">
+                :root { --primary: #77fd87 !important; --p: #77fd87 !important; }
+                body, html { 
+                    background: radial-gradient(circle at 80% 20%, #f476d2 0%, #edc4c4 80%) !important; 
+                    background-attachment: fixed !important; 
+                    min-height: 100vh !important;
+                }
+                .order-btn, .btn, .discount-badge { background: #77fd87 !important; }
+                .price, .current-price, h1 span, .new-price { color: #77fd87 !important; }
+            </style></head>
+<body data-aos-easing="ease" data-aos-duration="800" data-aos-delay="0" contenteditable="false">
+
+    <header>
+        <div class="logo"><font color="#ffffff">PROMO SPOT </font><font color="#77fd87">DZ</font></div>
+        <div style="font-size: 0.75rem; border: 1px solid var(--primary); padding: 4px 12px; border-radius: 50px;"><font color="#af0808">🇩🇿 التوصيل لـ 58 ولاية</font></div>
+    </header>
+
+    <a href="#order" class="mobile-sticky-btn">اطلب الآن - 6500 دج</a>
+
+    <section class="hero">
+        <div class="hero-content aos-init aos-animate" data-aos="fade-up">
+            <h1>خفّة الريشة.. <br> قوة الصخر.</h1>
+            <p>الحذاء الرياضي الأكثر مبيعاً في الجزائر الآن بتصميم جديد وراحة لا تضاهى.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+                <div style="background: var(--glass); padding: 8px 15px; border-radius: 12px; border: 1px solid var(--border);">
+                    <span style="color: var(--primary); font-weight: 900;">180g</span>
+                </div>
+                <div style="background: var(--glass); padding: 8px 15px; border-radius: 12px; border: 1px solid var(--border);">
+                    <span style="color: var(--primary); font-weight: 900;">Original</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image aos-init aos-animate" data-aos="zoom-in">
+            <img src="https://i.postimg.cc/NFMP3hcN/Picsart-26-02-28-01-15-15-184.png" alt="Phantom X">
+        </div>
+    </section>
+
+    <section id="order" class="order-section">
+        <div class="order-container aos-init aos-animate" data-aos="fade-up">
+            <div>
+                <h2 style="font-size: 1.8rem; margin-bottom: 10px;">أكد طلبك الآن 📦</h2>
+                <p style="color: #777; font-size: 0.9rem; margin-bottom: 20px;">الدفع عند الاستلام بعد معاينة الحذاء.</p>
+                <div style="background: rgba(255,62,62,0.15); padding: 20px; border-radius: 15px; border: 1px dashed var(--primary); text-align: center;"><span style="font-size: 0.9rem; text-decoration: line-through;"><font color="#eff6f0">3500 دج</font></span>
+                    <h3 style="font-size: 2rem; font-weight: 900;"><font color="#b10b0b">2500 د.ج</font></h3>
+                </div>
+            </div>
+
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>الاسم واللقب</label>
+                    <input type="text" name="full_name" required="" placeholder="أدخل اسمك الكامل">
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" name="phone" required="" placeholder="05 / 06 / 07 XX XX XX">
+                </div>
+                <div class="form-group">
+                    <label>الولاية</label>
+                    <select name="wilaya" id="wilayaSelect" required=""><option value="01-أدرار">01-أدرار</option><option value="02-الشلف">02-الشلف</option><option value="03-الأغواط">03-الأغواط</option><option value="04-أم البواقي">04-أم البواقي</option><option value="05-باتنة">05-باتنة</option><option value="06-بجاية">06-بجاية</option><option value="07-بسكرة">07-بسكرة</option><option value="08-بشار">08-بشار</option><option value="09-البليدة">09-البليدة</option><option value="10-البويرة">10-البويرة</option><option value="11-تمنراست">11-تمنراست</option><option value="12-تبسة">12-تبسة</option><option value="13-تلمسان">13-تلمسان</option><option value="14-تيارت">14-تيارت</option><option value="15-تيزي وزو">15-تيزي وزو</option><option value="16-الجزائر العاصمة">16-الجزائر العاصمة</option><option value="17-الجلفة">17-الجلفة</option><option value="18-جيجل">18-جيجل</option><option value="19-سطيف">19-سطيف</option><option value="20-سعيدة">20-سعيدة</option><option value="21-سكيكدة">21-سكيكدة</option><option value="22-سيدي بلعباس">22-سيدي بلعباس</option><option value="23-عنابة">23-عنابة</option><option value="24-قالمة">24-قالمة</option><option value="25-قسنطينة">25-قسنطينة</option><option value="26-المدية">26-المدية</option><option value="27-مستغانم">27-مستغانم</option><option value="28-المسيلة">28-المسيلة</option><option value="29-معسكر">29-معسكر</option><option value="30-ورقلة">30-ورقلة</option><option value="31-وهران">31-وهران</option><option value="32-البيض">32-البيض</option><option value="33-إليزي">33-إليزي</option><option value="34-برج بوعريريج">34-برج بوعريريج</option><option value="35-بومرداس">35-بومرداس</option><option value="36-الطارف">36-الطارف</option><option value="37-تندوف">37-تندوف</option><option value="38-تيسمسيلت">38-تيسمسيلت</option><option value="39-الوادي">39-الوادي</option><option value="40-خنشلة">40-خنشلة</option><option value="41-سوق أهراس">41-سوق أهراس</option><option value="42-تيبازة">42-تيبازة</option><option value="43-ميلة">43-ميلة</option><option value="44-عين الدفلى">44-عين الدفلى</option><option value="45-النعامة">45-النعامة</option><option value="46-عين تموشنت">46-عين تموشنت</option><option value="47-غرداية">47-غرداية</option><option value="48-غليزان">48-غليزان</option><option value="49-تيميمون">49-تيميمون</option><option value="50-برج باجي مختار">50-برج باجي مختار</option><option value="51-أولاد جلال">51-أولاد جلال</option><option value="52-بني عباس">52-بني عباس</option><option value="53-عين صالح">53-عين صالح</option><option value="54-عين قزام">54-عين قزام</option><option value="55-تقرت">55-تقرت</option><option value="56-جانت">56-جانت</option><option value="57-المغير">57-المغير</option><option value="58-المنيعة">58-المنيعة</option></select>
+                </div>
+                <div class="form-group">
+                    <label>العنوان</label>
+                    <input type="text" name="address" required="" placeholder="الحي أو البلدية">
+                </div>
+                <div class="form-group">
+                    <label>المقاس</label>
+                    <div class="size-grid">
+                        <div class="size-btn">37</div>
+                        <div class="size-btn">38</div>
+                        <div class="size-btn">39</div>
+                        <div class="size-btn">40</div>
+                        <div class="size-btn active">41</div>
+                    </div>
+                    <input type="hidden" name="size" id="selectedSize" value="41">
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">تأكيد الطلب</button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding: 40px; text-align: center; color: #444; font-size: 0.8rem;">
+        © 2026 PHANTOM X DZ
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+</body></html>
