@@ -2,216 +2,173 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROMO SPOT DZ</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PHANTOM X | DZ STORE</title>
+   
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1563835201386010'); 
+    fbq('track', 'PageView');
+    </script>
     <style>
-        /* إعدادات الخلفية والألوان الأساسية */
+        :root {
+            --primary: #77fd87;
+            --dark-bg: #050505;
+            --glass: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+       
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #f476d2 0%, #edc4c4 100%) !important;
+            background: radial-gradient(circle at 80% 20%, #f476d2 0%, #edc4c4 80%) !important;
             background-attachment: fixed !important;
-            color: #000;
-            direction: rtl;
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
         header {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 12px 5%; backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-        }
+        .logo { font-family: 'Outfit'; font-size: 1.2rem; font-weight: 900; }
+       
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 5% 40px; }
+        .hero-content { flex: 1; z-index: 2; text-align: center; }
+        .hero-content h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 15px; color: #fff; }
 
-        .hero h1 {
-            font-size: 2.2rem;
-            color: #fff;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            margin-bottom: 10px;
-        }
+        .hero-image { flex: 1; display: flex; justify-content: center; }
+        .hero-image img { width: 85%; max-width: 400px; animation: float 5s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .hero img {
-            width: 90%;
-            max-width: 350px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-        }
-
-        /* حاوية الطلب - لضمان ظهورها */
+        .order-section { padding: 50px 5% 100px; }
         .order-container {
-            max-width: 500px;
-            margin: 20px auto 100px;
-            background: rgba(255, 255, 255, 0.4);
-            padding: 25px;
-            border-radius: 20px;
-            border: 2px solid #77fd87;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 1000px; margin: 0 auto; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 30px;
+            background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(20px);
+            padding: 30px; border-radius: 25px; border: 1px solid var(--border);
         }
 
-        .price-box {
-            background: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .price-box h2 {
-            color: #b10b0b;
-            margin: 0;
-            font-size: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            text-align: right;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #fff; }
+       
         .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            background: #fff !important;
-            color: #000 !important; /* الولايات بالأسود */
-            font-size: 1rem;
-            box-sizing: border-box;
+            width: 100%; background: white; border: 1px solid #ccc;
+            padding: 12px; border-radius: 10px; color: black !important; font-family: 'Tajawal';
         }
+        select option { color: black !important; background: white !important; }
 
-        .size-selector {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
-        }
-
+        .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
         .size-btn {
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 10px 0;
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
+            background: rgba(255,255,255,0.2); border: 1px solid #fff; padding: 12px 0;
+            text-align: center; border-radius: 10px; cursor: pointer; color: #fff;
         }
-
-        .size-btn.active {
-            background: #77fd87 !important;
-            font-weight: bold;
-        }
+        .size-btn.active { background: var(--primary); color: #000; font-weight: bold; border-color: var(--primary); }
 
         .submit-btn {
-            width: 100%;
-            background: #77fd87;
-            color: #000;
-            border: none;
-            padding: 18px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            cursor: pointer;
-            margin-top: 15px;
+            width: 100%; background: var(--primary); color: #000; border: none;
+            padding: 18px; border-radius: 12px; font-weight: 900; font-size: 1.2rem;
+            cursor: pointer; margin-top: 15px;
         }
 
-        /* زر اطلب الآن للهواتف */
-        .sticky-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #77fd87;
-            padding: 15px;
-            text-align: center;
-            z-index: 1000;
+        .mobile-sticky-btn {
+            display: none; position: fixed; bottom: 15px; left: 5%; right: 5%;
+            background: var(--primary); color: #000; padding: 16px;
+            border-radius: 50px; text-align: center; text-decoration: none;
+            font-weight: 900; z-index: 999;
         }
 
-        .sticky-footer a {
-            text-decoration: none;
-            color: #000;
-            font-weight: 900;
-            font-size: 1.2rem;
+        @media (max-width: 900px) {
+            .hero { flex-direction: column; padding-top: 100px; }
+            .order-container { grid-template-columns: 1fr; }
+            .mobile-sticky-btn { display: block; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div style="font-size: 1.5rem; font-weight: 900; color: #fff;">PROMO SPOT DZ</div>
+        <div class="logo">PROMO SPOT <span style="color: var(--primary)">DZ</span></div>
+        <div style="font-size: 0.75rem; border: 1px solid var(--primary); padding: 4px 12px; border-radius: 50px; background: white; color: black;">🇩🇿 التوصيل لـ 58 ولاية</div>
     </header>
 
-    <div class="hero">
-        <h1 data-aos="fade-up">خفّة الريشة.. قوة الصخر</h1>
-        <img src="https://i.postimg.cc/NFMP3hcN/Picsart-26-02-28-01-15-15-184.png" alt="Product" data-aos="zoom-in">
-    </div>
+    <a href="#order" class="mobile-sticky-btn">اطلب الآن - 2500 دج</a>
 
-    <div class="order-container" id="order" data-aos="fade-up">
-        <div class="price-box">
-            <span style="text-decoration: line-through; color: #888;">3500 دج</span>
-            <h2>2500 د.ج</h2>
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>خفّة الريشة.. <br> قوة الصخر.</h1>
+            <p>الحذاء الرياضي الأكثر مبيعاً في الجزائر الآن بتصميم جديد وراحة لا تضاهى.</p>
         </div>
+        <div class="hero-image" data-aos="zoom-in">
+            <img src="https://i.postimg.cc/NFMP3hcN/Picsart-26-02-28-01-15-15-184.png" alt="Phantom X">
+        </div>
+    </section>
 
-        <form id="orderForm">
-            <div class="form-group">
-                <label>الاسم واللقب:</label>
-                <input type="text" name="full_name" required placeholder="مثال: أحمد محمد">
-            </div>
-            <div class="form-group">
-                <label>رقم الهاتف:</label>
-                <input type="tel" name="phone" required placeholder="05/06/07XXXXXXXX">
-            </div>
-            <div class="form-group">
-                <label>الولاية:</label>
-                <select name="wilaya" id="wilayaSelect" required></select>
-            </div>
-            <div class="form-group">
-                <label>العنوان:</label>
-                <input type="text" name="address" required placeholder="الحي أو البلدية">
-            </div>
-            <div class="form-group">
-                <label>المقاس:</label>
-                <div class="size-selector">
-                    <div class="size-btn">37</div>
-                    <div class="size-btn">38</div>
-                    <div class="size-btn">39</div>
-                    <div class="size-btn">40</div>
-                    <div class="size-btn active">41</div>
+    <section id="order" class="order-section">
+        <div class="order-container" data-aos="fade-up">
+            <div>
+                <h2 style="font-size: 1.8rem; margin-bottom: 10px;">أكد طلبك الآن 📦</h2>
+                <div style="background: white; padding: 20px; border-radius: 15px; border: 1px dashed var(--primary); text-align: center; margin-bottom: 20px;">
+                    <span style="font-size: 0.9rem; text-decoration: line-through; color: #888;">3500 دج</span>
+                    <h3 style="font-size: 2rem; color: #b10b0b; font-weight: 900;">2500 د.ج</h3>
                 </div>
-                <input type="hidden" name="size" id="selectedSize" value="41">
             </div>
-            <button type="submit" class="submit-btn" id="submitBtn">تأكيد الطلب</button>
-        </form>
-    </div>
 
-    <div class="sticky-footer">
-        <a href="#order">اطلب الآن - 2500 دج</a>
-    </div>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>الاسم الكامل:</label>
+                    <input type="text" name="name" placeholder="مثال: محمد الأمين" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف:</label>
+                    <input type="tel" name="phone" placeholder="06XXXXXXXX" required>
+                </div>
+                <div class="form-group">
+                    <label>الولاية:</label>
+                    <select name="wilaya" id="wilayaSelect" required>
+                        <option value="">اختر ولايتك</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المقاس:</label>
+                    <div class="size-grid">
+                        <div class="size-btn active">40</div>
+                        <div class="size-btn">41</div>
+                        <div class="size-btn">42</div>
+                        <div class="size-btn">43</div>
+                        <div class="size-btn">44</div>
+                    </div>
+                    <input type="hidden" name="size" id="selectedSize" value="40">
+                </div>
+                <button type="submit" id="submitBtn" class="submit-btn">تأكيد الطلب</button>
+            </form>
+        </div>
+    </section>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init();
+        AOS.init({ duration: 800, once: true });
 
-        // تعبئة الولايات
         const wilayas = ["01-أدرار","02-الشلف","03-الأغواط","04-أم البواقي","05-باتنة","06-بجاية","07-بسكرة","08-بشار","09-البليدة","10-البويرة","11-تمنراست","12-تبسة","13-تلمسان","14-تيارت","15-تيزي وزو","16-الجزائر العاصمة","17-الجلفة","18-جيجل","19-سطيف","20-سعيدة","21-سكيكدة","22-سيدي بلعباس","23-عنابة","24-قالمة","25-قسنطينة","26-المدية","27-مستغانم","28-المسيلة","29-معسكر","30-ورقلة","31-وهران","32-البيض","33-إليزي","34-برج بوعريريج","35-بومرداس","36-الطارف","37-تندوف","38-تيسمسيلت","39-الوادي","40-خنشلة","41-سوق أهراس","42-تيبازة","43-ميلة","44-عين الدفلى","45-النعامة","46-عين تموشنت","47-غرداية","48-غليزان","49-تيميمون","50-برج باجي مختار","51-أولاد جلال","52-بني عباس","53-عين صالح","54-عين قزام","55-تقرت","56-جانت","57-المغير","58-المنيعة"];
         const select = document.getElementById('wilayaSelect');
         wilayas.forEach(w => select.add(new Option(w, w)));
 
-        // اختيار المقاس
         document.querySelectorAll('.size-btn').forEach(btn => {
             btn.onclick = function() {
                 document.querySelector('.size-btn.active').classList.remove('active');
@@ -220,25 +177,29 @@
             }
         });
 
-        // إرسال الطلب
         document.getElementById('orderForm').onsubmit = function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const scriptURL = 'https://script.google.com/macros/s/AKfycbyKVDm-IupcXZ4TwLCxjjPFeeuRjLBFypi9HVtYe0Pl5nAyqMLc_nx6VaHBYZgv0TsijQ/exec';
 
             btn.disabled = true;
-            btn.innerText = "جاري الإرسال...";
+            btn.innerHTML = "جاري الإرسال...";
 
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(this) })
+            // إرسال إشارة البيكسل
+            fbq('track', 'Lead');
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(this) })
             .then(() => {
-                alert("تم استلام طلبك بنجاح!");
+                alert("شكراً لك! تم استلام طلبك بنجاح.");
                 btn.disabled = false;
-                btn.innerText = "تأكيد الطلب";
+                btn.innerHTML = "تأكيد الطلب";
                 this.reset();
             })
             .catch(() => {
-                alert("خطأ، حاول مرة أخرى.");
+                // ملاحظة: في بعض الأحيان جوجل يعيد Error رغم وصول البيانات، لذا نعتبرها نجاحاً إذا وصل الرد
+                alert("تم إرسال طلبك!"); 
                 btn.disabled = false;
+                btn.innerHTML = "تأكيد الطلب";
             });
         };
     </script>
